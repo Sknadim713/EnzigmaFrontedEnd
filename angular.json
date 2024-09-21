@@ -27,6 +27,8 @@
               }
             ],
             "styles": [
+              "node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css",
+                "node_modules/ngx-toastr/toastr.css",
               "src/styles.css"
             ],
             "scripts": [],

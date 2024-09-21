@@ -1,0 +1,102 @@
+<div class="slds-card">
+  <div class="slds-card__header slds-grid my-3 py-3" style="border-bottom: 2px solid #cad4cbce;">
+    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+      <div class="slds-media__body text-center">
+        <h2>
+          <span class="fs-3 fw-bolder header">Edit Task</span>
+        </h2>
+      </div>
+    </header>
+    <div class="slds-no-flex">
+      <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Close"  [routerLink]="['/task']" routerLinkActive="router-link-active" >
+        <i class="fas fa-times fs-5"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="slds-card__body slds-card__body_inner">
+    <form [formGroup]="NewTaskForm" (ngSubmit)="onSubmit()">
+      <div class="slds-grid slds-gutters slds-wrap slds-form">
+        <!-- Assigned To Field -->
+        <div class="slds-col slds-size_1-of-2 my-1">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="assignedTo"><sup>*</sup>Assigned To</label>
+            <div class="slds-form-element__control">
+              <select id="assignedTo" class="slds-select" formControlName="assignedTo">
+                <option value="" disabled selected>Select User</option>
+                <option *ngFor="let user of Users" [value]="user.value">{{ user.value }}</option>
+              </select>
+              <div *ngIf="NewTaskForm.get('assignedTo')?.touched && NewTaskForm.get('assignedTo')?.invalid" class="text-danger">
+                Assign to is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Field -->
+        <div class="slds-col slds-size_1-of-2 my-1">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="status"><sup>*</sup>Status</label>
+            <div class="slds-form-element__control">
+              <select id="status" class="slds-select" formControlName="status">
+                <option value="" disabled selected>Select Status</option>
+                <option *ngFor="let status of Status" [value]="status.value">{{ status.value }}</option>
+              </select>
+              <div *ngIf="NewTaskForm.get('status')?.touched && NewTaskForm.get('status')?.invalid" class="text-danger">
+                Status is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Priority Field -->
+        <div class="slds-col slds-size_1-of-2 my-1">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="priority"><sup>*</sup>Priority</label>
+            <div class="slds-form-element__control">
+              <select id="priority" class="slds-select" formControlName="priority">
+                <option value="" disabled selected>Select Priority</option>
+                <option *ngFor="let option of priority" [value]="option.value">{{ option.value }}</option>
+              </select>
+              <div *ngIf="NewTaskForm.get('priority')?.touched && NewTaskForm.get('priority')?.invalid" class="text-danger">
+                Priority is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Due Date Field -->
+        <div class="slds-col slds-size_1-of-2 my-1">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="dueDate"><sup>*</sup>Due Date</label>
+            <div class="slds-form-element__control">
+              <input type="date" id="dueDate" class="slds-input" formControlName="dueDate">
+              <div *ngIf="NewTaskForm.get('dueDate')?.touched && NewTaskForm.get('dueDate')?.invalid" class="text-danger">
+                Due Date is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description Field -->
+        <div class="slds-col slds-size_full">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="description"><sup>*</sup>Description</label>
+            <div class="slds-form-element__control">
+              <textarea id="description" class="slds-textarea" formControlName="comment" placeholder="Enter task description"></textarea>
+              <div *ngIf="NewTaskForm.get('comment')?.touched && NewTaskForm.get('comment')?.invalid" class="text-danger">
+                Description is required.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="slds-col slds-size_full slds-p-top_medium" style="text-align: right;">
+        <button class="slds-button slds-button_neutral" type="button" (click)="onCancel()" style="margin-right: 8px;">Cancel</button>
+        <button class="slds-button slds-button_brand" [disabled]="NewTaskForm.invalid" type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

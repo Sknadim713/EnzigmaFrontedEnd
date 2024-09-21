@@ -1,0 +1,51 @@
+/* .slds-is-open .slds-dropdown {
+    display: block;
+} */
+
+/* .slds-dropdown {
+    display: none;
+} */
+.search-container {
+    position: relative;
+    display: inline-block;
+}
+
+.search-icon {
+    position: absolute;
+    left: 150px;
+    top: 62%;
+    transform: translateY(-50%);
+    pointer-events: none;
+
+}
+
+.fa-bars {
+    color: red;
+}
+
+.task-heading {
+    font-size: 18px;
+    color: darkgray;
+    font-weight: 400;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bg-color {
+    background-color: rgb(245, 245, 245);
+}
+
+.slds-dropdown__item {
+    cursor: pointer;
+    /* Change cursor to pointer for better UX */
+}
+
+.slds-dropdown__item:hover,
+.slds-dropdown__item:focus {
+    background-color: #f0f0f0;
+
+}
+
+.slds-dropdown__item.selected {
+    background-color: #d0e0f0;
+
+}

@@ -1,0 +1,123 @@
+<div class="slds-card">
+
+  <div class="slds-card__header slds-grid bg-color m-0 " >
+    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+      <div class="slds-media__body">
+        <div class="slds-media slds-media--center">
+          <div class="slds-media__figure">
+            <h2 class="fas fa-bars fa-2x  "></h2>
+          </div>
+          <div class="slds-media__body my-2">
+            <h1 class="task-heading">Tasks</h1>
+            <h6 >All Tasks</h6>
+            <p class="ms-5"> {{totalTasks}} record</p>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="slds-no-flex">
+      <button class="slds-button slds-button_neutral" [routerLink]="['/addtask']"
+        routerLinkActive="router-link-active">New Task</button>
+      <button class="slds-button slds-button_neutral" (click)="GetUser()">Refresh</button>
+      <br>
+   
+      <div class="search-container">
+        <input class="mt-2" type="text" placeholder="Search" [(ngModel)]="searchTask"   (keyup)="onSearchChange()">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="slds-card__body m-0 p-0">
+    <div class="slds-table slds-table_bordered">
+      <table class="p-5" aria-label="Tasks">
+        <thead class="text-center">
+          <tr class="slds-line-height_reset">
+            <th *ngFor="let header of theading" scope="col">
+              <span class="slds-truncate">{{ header.value }}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of displayedTasks">
+            <td class="text-center"><span class="slds-truncate">{{task.assignedTo}}</span></td>
+            <td class="text-center"><span class="slds-truncate">{{task.status}}</span></td>
+            <td class="text-center"><span class="slds-truncate">{{task.dueDate | date}}</span></td>
+            <td class="text-center"><span class="slds-truncate">{{task.priority}}</span></td>
+            <td class="text-center"><span class="slds-truncate">{{task.comment}}</span></td>
+            <td class="text-center">
+              <div class="slds-dropdown-trigger slds-dropdown-trigger_click" [ngClass]="{'slds-is-open': task.isDropdownOpen}">
+                <button class="slds-button slds-button_icon" (click)="toggleDropdown(task)" aria-haspopup="true" title="Show More">
+                  <i class="fas fa-caret-square-down"></i>
+                  <span class="slds-assistive-text">Show More</span>
+                </button>
+                <div class="slds-dropdown slds-dropdown_right">
+                  <ul class="slds-dropdown__list" role="menu">
+                    <li class="slds-dropdown__item" role="presentation" [ngClass]="{'selected': task._id === selectedTaskId}">
+                      <a role="menuitem" tabindex="0" (click)="deleteTask(task._id)">
+                        <span class="slds-truncate">Delete</span>
+                      </a>
+                    </li>
+                    <li class="slds-dropdown__item" role="presentation">
+                      <a role="menuitem" tabindex="0" (click)="viewTask(task._id)">
+                        <span class="slds-truncate">Edit</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div class="slds-grid slds-grid_align-spread bg-color py-3">
+    <p>Showing {{ getCurrentRange() }}</p>
+    <nav aria-label="Pagination Navigation" class="d-flex justify-content-center">
+      <div class="btn-group" role="group">
+        <button class="btn btn-outline-secondary slds-button slds-button_icon" title="First Page" (click)="goToFirstPage()" >
+          <i class="fas fa-arrow-up"></i> First
+        </button>
+        <button class="btn btn-outline-secondary slds-button slds-button_icon" title="Previous Page" (click)="goToPreviousPage()" >
+          <i class="fas fa-chevron-left"></i> Prev
+        </button>
+        
+        <!-- Show current page only -->
+        <span class="btn btn-outline-secondary slds-button slds-button_icon disabled">{{ currentPage }}</span>
+  
+        <button class="btn btn-outline-secondary slds-button slds-button_icon" title="Next Page" (click)="goToNextPage()" >
+          Next <i class="fas fa-chevron-right"></i>
+        </button>
+        <button class="btn btn-outline-secondary slds-button slds-button_icon" title="Last Page" (click)="goToLastPage()" >
+          Last <i class="fas fa-arrow-down"></i>
+        </button>
+      </div>
+    </nav>
+  </div>
+</div>
+
+
+<!-- model section -->
+
+<!-- model section -->
+<div *ngIf="isModalOpen" class="slds-modal slds-fade-in-open">
+  <div class="slds-modal__container">
+    <div class="slds-modal__header bg-danger">
+      <h2 class="slds-text-heading_medium text-white">Delete</h2>
+      <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" (click)="closeModal()">
+        <span class="slds-assistive-text">Close</span>
+      </button>
+    </div>
+    <div class="slds-modal__content slds-p-around_medium">
+      <p>Are you sure you want to delete this task?</p>
+    </div>
+    <div class="slds-modal__footer">
+      <button class="slds-button slds-button_neutral" (click)="closeModal()">Cancel</button>
+      <button class="slds-button slds-button_destructive" (click)="deleteConfirmed()">Delete</button>
+    </div>
+  </div>
+</div>
